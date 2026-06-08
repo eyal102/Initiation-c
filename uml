@@ -18,17 +18,17 @@ class queue {
     -DataStructure base
     -int front
     -int rear
-    +queue* create_queue()
+    +queue* create_queue(void)
 }
 
 class stack {
     -DataStructure base
     -int top
-    +stack* create_stack()
+    +stack* create_stack(void)
 }
 
-class itemInterface <<Interface>> {
-    +item* (*create_item)()
+class ItemInterface <<Interface>> {
+    +item* (*create_item)(void)
     +void (*destroy_item)(item *item)
     +void (*print_item)(item *item)
     +char* (*get_name)(item *item)
@@ -60,7 +60,7 @@ class Locattion{
 DataStructureInterface <|-- DataStructure
 DataStructure --* queue
 DataStructure --* stack
-itemInterface <|-- item
-item --* Identity
-item --* Locattion
+ItemInterface <|-- Item
+Item --* Identity
+Item --* Locattion
 @enduml

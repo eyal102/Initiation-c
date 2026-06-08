@@ -5,7 +5,7 @@
 typedef struct Item Item;
 
 typedef struct ItemInterface {
-    Item* (*create_item)();
+    Item* (*create_item)(void);
     void (*destroy_item)(Item *item);
     void (*print_item)(Item *item);
     char* (*get_name)(Item *item);
