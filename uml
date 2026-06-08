@@ -36,20 +36,24 @@ class itemInterface <<Interface>> {
     +void (*send_item)(item *item)
 }
 
-class item {
-    -itemInterface *interface
+class Item {
+    -ItemInterface *interface
     -char *name
 }
 
 class Identity{
+    -Item item
     -int age
     -int id
+    +ItemInterface* get_identity_vtable(void)
 }
 
 class Locattion{
+    -Item item
     -double x
     -double y
     -double z
+    +ItemInterface* get_location_vtable(void)
 }
 
 

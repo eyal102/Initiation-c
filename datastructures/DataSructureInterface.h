@@ -1,5 +1,10 @@
-#ifndef DataSructureInterface_H
-#define DataSructureInterface_H
+#ifndef DATASTRUCTUREINTERFACE_H
+#define DATASTRUCTUREINTERFACE_H
+
+#include "../Items/Item.h"
+
+// FORWARD DECLARATION: This completely avoids the chicken-and-egg problem.
+typedef struct DataStructure DataStructure;
 
 typedef struct {
     void (*add)(DataStructure *ds, Item *item);
@@ -9,6 +14,4 @@ typedef struct {
     void (*send)(DataStructure *ds, Item *item);
     void (*destroy)(DataStructure *ds);
 } DataStructureInterface;
-
-
-#endif // DataSructureInterface_H
+#endif // DATASTRUCTUREINTERFACE_H
