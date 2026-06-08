@@ -1,16 +1,16 @@
 @startuml
 class DataStructureInterface<<Interface>>{
-    +void (*add)(DataStructure *ds, Item *item)
-    +void (*remove)(DataStructure *ds, Item *item)
-    +Item* (*find)(DataStructure *ds, char *name)
+    +void (*add)(DataStructure *ds, item *item)
+    +void (*remove)(DataStructure *ds, item *item)
+    +item* (*find)(DataStructure *ds, char *name)
     +void (*list_all)(DataStructure *ds)
-    +void (*send)(DataStructure *ds, Item *item)
+    +void (*send)(DataStructure *ds, item *item)
     +void (*destroy)(DataStructure *ds)
 }
 
 class DataStructure {
     -DataStructureInterface *interface
-    -Item **items
+    -item **items
     -int size
 }
 
@@ -27,17 +27,17 @@ class stack {
     +stack* create_stack()
 }
 
-class ItemInterface <<Interface>> {
-    +Item* (*create_item)()
-    +void (*destroy_item)(Item *item)
-    +void (*print_item)(Item *item)
-    +char* (*get_name)(Item *item)
+class itemInterface <<Interface>> {
+    +item* (*create_item)()
+    +void (*destroy_item)(item *item)
+    +void (*print_item)(item *item)
+    +char* (*get_name)(item *item)
     +bool (*compare_names)(char *name1, char *name2)
-    +void (*send_item)(Item *item)
+    +void (*send_item)(item *item)
 }
 
-class Item {
-    -ItemInterface *interface
+class item {
+    -itemInterface *interface
     -char *name
 }
 
@@ -56,7 +56,7 @@ class Locattion{
 DataStructureInterface <|-- DataStructure
 DataStructure --* queue
 DataStructure --* stack
-ItemInterface <|-- Item
-Item --* Identity
-Item --* Locattion
+itemInterface <|-- item
+item --* Identity
+item --* Locattion
 @enduml
