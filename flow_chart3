@@ -1,0 +1,100 @@
+
+@startuml
+start
+
+partition "Initialization Phase" {
+    :Initialize system variables;
+    :Set DataStructure *ds = NULL;
+    :Set Item* (*create_item)() = NULL;
+}
+
+:Display Menu 1:\n1. Queue\n2. Stack;
+
+if (User Selection) then (Option 1 or 2\n[Queue / Stack])
+    
+    partition "Data Structure Instantiation (Polymorphic)" {
+        switch (DataStructure)
+            case (Queue)
+                :ds = (DataStructure*)create_queue();
+            case (Stack)
+                :ds = (DataStructure*)create_stack();
+        endswitch
+        note right
+          Allocates internal dynamic array:
+          ds->items = malloc(sizeof(Item*) * capacity);
+          Binds interface function pointers (vtable).
+        end note
+    }
+    
+    :Display Menu 2:\n1. Identity\n2. Location;
+    if (User Selection) then (Option 1 or 2\n[Identity / Location])
+        switch (Item Type Selection)
+            case (Identity)
+                :create_item = &create_identity;
+            case (Location)
+                :create_item = &create_location;
+        endswitch
+        note right
+          No state flags used. 
+          We save the function pointer to the 
+          correct initialization factory.
+        end note
+        
+        repeat
+            :Display Menu 3:\n1. Add\n2. Remove\n3. Find Item\n4. List All Items\n5. Send Item\n6. Exit;
+            switch (User Selection)
+                case ( Choice = 1 )
+                    partition "Polymorphic Item Allocation" {
+                        :Item *newItem = create_item();
+                        :ds->vtable->add(ds, newItem);
+                        note right
+                          Polymorphic Factory execution!
+                          Calls the assigned function pointer directly.
+                        end note
+                    }
+                case ( Choice = 2 )
+                    :ds->vtable->remove(ds);
+                    note right
+                      Removes Item* pointer and calls 
+                      item->vtable->destroy_item(item)
+                    end note
+                case ( Choice = 3 )
+                    :Get Target Name string from user;
+                    :Item *found = ds->vtable->find(ds, name);
+                case ( Choice = 4 )
+                    :ds->vtable->list_all(ds);
+                    note right
+                      Loops through items and calls 
+                      item->vtable->print_item(item)
+                    end note
+                case ( Choice = 5 )
+                    :Get Target Name string from user;
+                    :Item *target = ds->vtable->find(ds, name);
+                    if (Target Found?) then (Yes)
+                        :item->vtable->send_item(target);
+                    else (No)
+                        :Show Error;
+                    endif
+                case ( Choice = 6 )
+                    partition "Polymorphic Memory Deallocation" {
+                        :ds->vtable->destroy(ds);
+                        note right
+                          Loops through all remaining Item* in array, 
+                          calls item->vtable->destroy_item(), 
+                          then frees ds array and base structures.
+                        end note
+                    }
+                case ( Default / Invalid )
+                    :Show Error;
+            endswitch
+        repeat while (Choice == 6?) is (No) not (Yes)
+    else (Invalid)
+        :Show Error Message;
+    endif
+
+else (Invalid)
+    :Show Error Message;
+endif
+
+stop
+@enduml
