@@ -7,7 +7,7 @@
 typedef struct DataStructure {
     DataStructureInterface *interface;
     Item **items;
-    int size;
+    int count;
 } DataStructure;
 
 

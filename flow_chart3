@@ -21,7 +21,8 @@ if (User Selection) then (Option 1 or 2\n[Queue / Stack])
         endswitch
         note right
           Allocates internal dynamic array:
-          ds->items = malloc(sizeof(Item*) * capacity);
+          ds->items = Null;
+          ds->count = 0
           Binds interface function pointers (vtable).
         end note
     }

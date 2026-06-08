@@ -1,5 +1,5 @@
 @startuml
-class DataStructureInterface<<Interface>>{
+interface DataStructureInterface<<Interface>>{
     +void (*add)(DataStructure *ds, item *item)
     +void (*remove)(DataStructure *ds, item *item)
     +item* (*find)(DataStructure *ds, char *name)
@@ -11,7 +11,7 @@ class DataStructureInterface<<Interface>>{
 class DataStructure {
     -DataStructureInterface *interface
     -item **items
-    -int size
+    -int count
 }
 
 class queue {
@@ -27,7 +27,7 @@ class stack {
     +stack* create_stack(void)
 }
 
-class ItemInterface <<Interface>> {
+interface ItemInterface <<Interface>> {
     +item* (*create_item)(void)
     +void (*destroy_item)(item *item)
     +void (*print_item)(item *item)
